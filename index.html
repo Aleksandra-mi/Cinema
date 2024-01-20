@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>Выбор сеанса</title>
+    {% macro render_checkbox(name, relation, selected) %}
+        {% for i in range(len(relation)) %}
+            <div class=row>
+                {% if str((i+1)) in selected %}
+                    <input type=checkbox name={{name}} value={{i+1}} checked />
+                {% else %}
+                    <input type=checkbox name={{name}} value={{i+1}} />
+                {% endif %}
+                {% if name == 'hall' %}
+                    {{str(relation.loc[i, relation.dtypes.index[0]]) + ' (' + str(relation.loc[i, relation.dtypes.index[1]]) + ' мест)'}}
+                {% else %}
+                    {{str(relation.loc[i, relation.dtypes.index[1]])}}
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% endmacro %}
+
+    {% macro render_select(select_name, combo_box, selected) %}
+        <select name={{select_name}}>
+            {% if selected == 0 %}
+                <option value=0 selected>
+                    Весь день
+                </option>
+            {% else %}
+                <option value=0 >
+                    Весь день
+                </option>
+            {% endif %}
+            {% for i in range(len(combo_box)) %}
+                {% if str(combo_box.loc[i, 'time_type_id']) == str(selected) %}
+                    <option value={{i+1}} selected>
+                        {{combo_box.loc[i, 'time_type_name']}}
+                    </option>
+                {% else %}
+                    <option value={{i+1}}>
+                        {{combo_box.loc[i, 'time_type_name']}}
+                    </option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    {% endmacro %}
+
+    {% macro render_button(name, value, date_type) %}
+        {% if date_type == name %}
+            <div class="button_active">
+                <input type="submit" value="{{value}}" name="{{name}}" >
+            </div>
+        {% else %}
+            <div class="button">
+                <input type="submit" value="{{value}}" name="{{name}}" >
+            </div>
+        {% endif %}
+    {% endmacro %}
+
+    {% macro render_table(relation, id) %}
+        {% set n = len(relation) %}
+        <table>
+            <tr>
+                {% for name in relation.dtypes.index %}
+                    {% if name != id %}
+                        <th>{{name}}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+            <tbody>
+                {% for i in range(n) %}
+                <tr>
+                    {% for name in relation.dtypes.index %}
+                        {% if name != id %}
+                            <td>
+                                {% if name != "Билет" %}
+                                    {{ relation.loc[i, name] }}
+                                {% else %}
+                                    {% if relation.loc[i, name] == 0 %}
+                                        Мест нет
+                                    {% else %}
+                                        <form action="{{ url_for('buy', session_id=relation.loc[i,'Сеанс']) }}" method ="post">
+                                            <input class="button_buy" type="submit" value="Купить">
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endmacro %}
+</head>
+<body>
+    <form action='' method="post">
+        <div class="filter">
+            <div class="filter_title">
+                <p>
+                    Фильтр по характеристикам
+                </p>
+            </div>
+            <div class="scroll">
+                <details {% if checked_list_movie %} open {% endif %}>
+                    <summary>Фильм</summary>
+                    {{render_checkbox('movie', movie_box, checked_list_movie)}}
+                </details>
+                <p>
+                    <details {% if checked_list_genre %} open {% endif %}>
+                        <summary>Жанр</summary>
+                        {{render_checkbox('genre', genre_box, checked_list_genre)}}
+                    </details>
+                </p>
+                <p>
+                    <details {% if checked_list_country %} open {% endif %}>
+                        <summary>Страна</summary>
+                        {{render_checkbox('country', country_box, checked_list_country)}}
+                    </details>
+                </p>
+                <p>
+                    <details {% if checked_list_actor %} open {% endif %}>
+                        <summary>Актер</summary>
+                        {{render_checkbox('actor', actor_box, checked_list_actor)}}
+                    </details>
+                </p>
+                <p>
+                    <details {% if checked_list_director %} open {% endif %}>
+                        <summary>Режиссер</summary>
+                        {{render_checkbox('director', director_box, checked_list_director)}}
+                    </details>
+                </p>
+                <p>
+                    <details {% if checked_list_age %} open {% endif %}>
+                        <summary>Возраст</summary>
+                        {{render_checkbox('age', age_box, checked_list_age)}}
+                    </details>
+                </p>
+                <p>
+                    <details {% if checked_list_hall %} open {% endif %}>
+                        <summary>Зал</summary>
+                        {{render_checkbox('hall', hall_box, checked_list_hall)}}
+                    </details>
+                </p>
+            </div>
+            <div class="button_active">
+                <input type="submit" value="Применить" name="search" >
+            </div>
+            <div class="button">
+                <input type="submit" value="Сбросить" name="reset" >
+            </div>
+        </div>
+        <div class="content">
+            <div class="full">
+                <div class="date_all">
+                     <div class="button">
+                        {{ render_select('time', time_box, time) }}
+                    </div>
+                    {{ render_button('all', "Все сеансы", date_type)}}
+                    {{ render_button('today', "Сегодня", date_type)}}
+                    {{ render_button('tomorrow', "Завтра", date_type)}}
+<!--                    {% if f %}-->
+<!--                        {{ render_button('new_date', new_date, date_type)}}-->
+<!--                    {% endif %}-->
+<!--                    {{ render_button('select_date', "Выбрать дату", date_type)}}-->
+                </div>
+            </div>
+<!--            {% if date_type == 'select_date' %}-->
+<!--                <div class="full2">-->
+<!--                    <div class="date_all1">-->
+<!--                    </div>-->
+<!--                    <div class="date_all2">-->
+<!--                        <div class="button">-->
+<!--                            <input type="date"  value="{{today}}" name="new_date" >-->
+<!--                        </div>-->
+<!--                        <div class="button2">-->
+<!--                            <input type="submit" value="ok" name="ok">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            {% endif %}-->
+            <div class="table">
+                {{ render_table(session_box, 'Сеанс') }}
+            </div>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,253 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    margin: 0px;
+    font-size: 17px;
+}
+form {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+}
+
+.filter {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 290px;
+    background: #e3dfe5;
+    border-right-style: solid;
+    border-right-color: black;
+    border-right-width: 1px;
+}
+
+.filter_title {
+    color: #4B0082;
+    height: 60px;
+    font-size: 19px;
+    line-height: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+}
+
+.scroll {
+    overflow-y: scroll;
+    height: 73%;
+    padding: 12px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    min-width: 500px;
+}
+
+.full {
+    width: 100%;
+    background: #e3dfe5;
+    height: 60px;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+}
+
+.date_all {
+    width: 80%;
+    min-width: 500px;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+}
+
+.full2 {
+    width: 100%;
+    background: #e3dfe5;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    border-bottom-style: solid;
+    border-bottom-color: black;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-top-color: #e3dfe5;
+    border-top-width: 1px;
+}
+
+.date_all1 {
+    width: 48%;
+    height: 60px;
+}
+
+.date_all2 {
+    width: 15%;
+    display: flex;
+    height: 60px;
+}
+
+.date {
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.table {
+    width: 99%;
+    min-width: 500px;
+    max-height: 90%;
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    padding: 15px;
+}
+
+table {
+    border: 2px solid #696969;
+    border-radius: 10px;
+    border-spacing: 0;
+    background: #F5F5F5;
+    font-size: 17px;
+    valign: center;
+}
+
+table td, th {
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #696969;
+}
+
+table th {
+    border-top: none;
+    border-bottom: none;
+}
+
+table tr:first-child td {
+    border-top: 2px solid #696969;
+}
+
+table td:first-child, table th:first-child {
+  border-left: none;
+
+}
+
+table td:last-child, table th:last-child {
+  border-right: none;
+
+}
+
+table tr:last-child td {
+  border-bottom: none;
+
+}
+
+table input {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+}
+
+.button {
+    margin: auto;
+
+}
+
+.button2 {
+    margin: auto;
+
+}
+
+.button_active {
+    margin: auto;
+
+}
+
+.button > input {
+    background-color: #F5F5F5;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 0px;
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button2 > input {
+    background-color: #F5F5F5;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 0px;
+    width: 50px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button_active > input {
+    background-color: #9370DB;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 0px;
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button_active > button {
+    background-color: #9370DB;
+    border: 1px solid black;
+    border-radius: 15px;
+    padding: 10px 0px;
+    width: 120px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.button > select {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px 0px;
+    width: 170px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.buy {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 50px;
+}
+
+.desc {
+    margin:auto;
+}
+
+.seats {
+    margin:auto;
+}
+
+.total {
+    margin:auto;
+}
+
+.back {
+    margin:auto;
+}
+
+a {
+    text-decoration-color: #696969;
+    color: #696969;
+}

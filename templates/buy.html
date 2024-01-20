@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>Покупка билетов</title>
+    {% macro render_table(relation) %}
+        {% set n = len(relation) %}
+        <table>
+            <tr>
+                {% for name in relation.dtypes.index %}
+                    <th>{{name}}</th>
+                {% endfor %}
+            </tr>
+            <tbody>
+                {% for i in range(n) %}
+                <tr>
+                    {% for name in relation.dtypes.index %}
+                        <td>
+                            {% if name == "Выбрано билетов" %}
+                                {% if relation.loc[i, 'Осталось билетов'] > 0 %}
+                                    {% set nn = "count" + str(i+1) %}
+                                    <input type="number" min="0" max="{{relation.loc[i, 'Осталось билетов']}}" name={{nn}} value="{{relation.loc[i, 'Выбрано билетов']}}">
+    <!--                                <input type="submit" name="c" value="" hidden>-->
+                                {% else %}
+                                    <input type="number" min="0" max="{{relation.loc[i, 'Осталось билетов']}}" name={{nn}} value="{{relation.loc[i, 'Выбрано билетов']}}" disabled>
+                                {% endif %}
+                            {% elif name == 'Покупка' %}
+                                {% if relation.loc[i, 'Осталось билетов'] > 0 %}
+                                    {% set nn = "buy" + str(i+1) %}
+                                    <input type="submit" name={{nn}} value="Купить">
+                                {% else %}
+                                {% endif %}
+                            {% else %}
+                                {{ relation.loc[i, name] }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endmacro %}
+</head>
+<body>
+    <div class="buy">
+        <div class="desc">
+            <p>
+                <b>Фильм:</b> {{ desc_box.loc[0, 'Название'] }} <br>
+                <b>Дата:</b> {{ desc_box.loc[0, 'Дата'] }} <br>
+                <b>Время:</b> {{ desc_box.loc[0, 'Время'] }} <br>
+                <b>Зал:</b> {{ desc_box.loc[0, 'Зал'] }}
+            </p>
+        </div>
+        <div class="seats">
+            <form method="post">
+                <div class="table1">
+                    {{ render_table(tickets_box) }}
+                </div>
+            </form>
+        </div>
+<!--        <div class="total">-->
+<!--            <p>-->
+<!--                <b>Итого к оплате:</b>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--        <div class="button_active">-->
+<!--            <form action="" method ="post">-->
+<!--                {% set v = str(session_id) + '/' + str(ticket_count1) + '/' + str(ticket_count2) + '/' + str(ticket_count3) %}-->
+<!--                <button onclick='{{url_for("index")}}' type="submit" value={{v}} name="pay">Оплатить</button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+        <div class="back">
+            <a href='{{url_for("index")}}'>
+                Вернуться к выбору сеанса
+            </a>
+        </div>
+    </div>
+</body>
+</html>
